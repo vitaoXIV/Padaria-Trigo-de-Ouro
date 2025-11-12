@@ -22,7 +22,7 @@ export default function Navbar() {
           to="/login" 
           className="flex items-center gap-2 text-gray-700 dark:text-gray-300 font-medium hover:text-[#D4AF37] dark:hover:text-[#D4AF37] transition"
         >
-          <FaUser size={20} /> Login
+          <FaUser size={20} /> 
         </Link>
         <Link 
           to="/produtos" 
