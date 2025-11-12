@@ -4,6 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Padaria Trigo de Ouro</title>
+    <script>
+      // Script para aplicar tema antes do React carregar
+      (function() {
+        try {
+          const theme = localStorage.getItem("theme") || "light";
+          const html = document.documentElement;
+          
+          if (theme === "dark") {
+            html.classList.add("dark");
+          } else {
+            html.classList.remove("dark");
+          }
+        } catch (e) {
+          console.error("Erro ao aplicar tema:", e);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
