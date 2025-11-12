@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useTheme } from "../contexts/ThemeContext";
+import { FaHome, FaUser, FaBox, FaShoppingCart, FaHistory, FaMoon, FaSun } from "react-icons/fa";
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
@@ -13,41 +14,41 @@ export default function Navbar() {
       <div className="flex gap-6 items-center">
         <Link 
           to="/" 
-          className="text-gray-700 dark:text-gray-300 font-medium hover:text-[#D4AF37] dark:hover:text-[#D4AF37] transition"
+          className="flex items-center gap-2 text-gray-700 dark:text-gray-300 font-medium hover:text-[#D4AF37] dark:hover:text-[#D4AF37] transition"
         >
-          Home
+          <FaHome size={20} /> Home
         </Link>
         <Link 
           to="/login" 
-          className="text-gray-700 dark:text-gray-300 font-medium hover:text-[#D4AF37] dark:hover:text-[#D4AF37] transition"
+          className="flex items-center gap-2 text-gray-700 dark:text-gray-300 font-medium hover:text-[#D4AF37] dark:hover:text-[#D4AF37] transition"
         >
-          Login
+          <FaUser size={20} /> Login
         </Link>
         <Link 
           to="/produtos" 
-          className="text-gray-700 dark:text-gray-300 font-medium hover:text-[#D4AF37] dark:hover:text-[#D4AF37] transition"
+          className="flex items-center gap-2 text-gray-700 dark:text-gray-300 font-medium hover:text-[#D4AF37] dark:hover:text-[#D4AF37] transition"
         >
-          Produtos
+          <FaBox size={20} /> Produtos
         </Link>
         <Link 
           to="/carrinho" 
-          className="text-gray-700 dark:text-gray-300 font-medium hover:text-[#D4AF37] dark:hover:text-[#D4AF37] transition"
+          className="flex items-center gap-2 text-gray-700 dark:text-gray-300 font-medium hover:text-[#D4AF37] dark:hover:text-[#D4AF37] transition"
         >
-          🛒 Carrinho
+          <FaShoppingCart size={20} /> Carrinho
         </Link>
         <Link 
           to="/historico" 
-          className="text-gray-700 dark:text-gray-300 font-medium hover:text-[#D4AF37] dark:hover:text-[#D4AF37] transition"
+          className="flex items-center gap-2 text-gray-700 dark:text-gray-300 font-medium hover:text-[#D4AF37] dark:hover:text-[#D4AF37] transition"
         >
-          📊 Histórico
+          <FaHistory size={20} /> Histórico
         </Link>
 
         <button
           onClick={toggleTheme}
-          className="px-4 py-2 rounded-lg bg-[#D4AF37] hover:bg-[#B8942D] text-white font-semibold transition cursor-pointer"
+          className="px-4 py-2 rounded-lg bg-[#D4AF37] hover:bg-[#B8942D] text-white font-semibold transition cursor-pointer flex items-center gap-2"
           title={`Mudar para tema ${theme === "light" ? "escuro" : "claro"}`}
         >
-          {theme === "light" ? "🌙" : "☀️"}
+          {theme === "light" ? <FaMoon size={20} /> : <FaSun size={20} />}
         </button>
       </div>
     </nav>

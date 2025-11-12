@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { finalizarVenda } from "../services/salesService";
 import { Link, useNavigate } from "react-router-dom";
+import { FaTrash, FaMinus, FaPlus, FaShoppingBag } from "react-icons/fa";
 
 export default function Carrinho() {
   const [carrinho, setCarrinho] = useState([]);
@@ -75,7 +76,9 @@ export default function Carrinho() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 dark:from-[#111111] dark:to-[#0a0a0a] text-gray-800 dark:text-gray-200 transition-colors duration-500">
       <div className="p-6 max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#B8942D]">🛒 Carrinho</h1>
+        <h1 className="text-3xl font-bold mb-6 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#B8942D]">
+          <FaShoppingBag size={32} className="text-[#D4AF37]" /> Carrinho
+        </h1>
 
         {carrinho.length === 0 ? (
           <div className="bg-white dark:bg-[#1E1E1E] p-8 rounded-lg text-center border-2 border-gray-200 dark:border-gray-700">
@@ -111,7 +114,7 @@ export default function Carrinho() {
                         onClick={() => diminuirQuantidade(item.produto_id)}
                         className="px-3 py-1 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded transition"
                       >
-                        -
+                        <FaMinus size={16} />
                       </button>
                       <span className="w-8 text-center font-semibold">{item.quantidade}</span>
                       <button
@@ -119,7 +122,7 @@ export default function Carrinho() {
                         disabled={item.quantidade >= item.estoque}
                         className="px-3 py-1 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded transition disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        +
+                        <FaPlus size={16} />
                       </button>
                     </div>
 
