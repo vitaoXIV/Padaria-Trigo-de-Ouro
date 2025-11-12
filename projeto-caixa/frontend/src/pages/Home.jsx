@@ -20,12 +20,7 @@ export default function Home() {
           >
             Ver Produtos
           </Link>
-          <Link
-            to="/login"
-            className="px-8 py-3 bg-white dark:bg-[#2A2A2A] border-2 border-[#D4AF37] hover:bg-gray-100 dark:hover:bg-[#3A3A3A] text-[#D4AF37] dark:text-[#D4AF37] font-semibold rounded-lg transition duration-300 transform hover:scale-105 shadow-lg"
-          >
-            Fazer Login
-          </Link>
+          
         </div>
       </div>
 
