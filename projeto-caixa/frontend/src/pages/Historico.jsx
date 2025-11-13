@@ -52,13 +52,26 @@ export default function Historico() {
   function filtrarVendas() {
     if (filtroData === "todos") return vendas;
     
-    const hoje = new Date();
-    const data = new Date(filtroData);
+    console.log("Filtrando por data:", filtroData);
+    console.log("Total de vendas:", vendas.length);
     
-    return vendas.filter(venda => {
+    const resultado = vendas.filter(venda => {
+      // Pegar a data da venda (que está em ISO 8601 UTC como "2025-11-12T13:08:05.146")
       const dataVenda = new Date(venda.data);
-      return dataVenda.toDateString() === data.toDateString();
+      
+      // Extrair apenas a data (YYYY-MM-DD) sem a hora
+      const dataVendaString = dataVenda.toISOString().split("T")[0];
+      
+      // Comparar strings: filtroData é "2025-11-12" e dataVendaString é "2025-11-12"
+      const match = dataVendaString === filtroData;
+      
+      console.log("Venda #" + venda.venda_id, "Data original:", venda.data, "Data convertida:", dataVendaString, "Filtro:", filtroData, "Match:", match);
+      
+      return match;
     });
+    
+    console.log("Vendas filtradas:", resultado.length);
+    return resultado;
   }
 
   function formatarData(data) {
