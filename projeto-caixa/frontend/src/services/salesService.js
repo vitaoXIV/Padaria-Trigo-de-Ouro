@@ -88,6 +88,8 @@ export async function finalizarVenda(carrinho) {
   }
 
   // 4. Atualizar estoque (decrementar pela quantidade vendida)
+  const errosEstoque = [];
+  
   for (const item of carrinhoNormalizado) {
     // Buscar o estoque atual do banco (pode ter mudado)
     const { data: produtoAtual, error: fetchError } = await supabase
@@ -97,25 +99,38 @@ export async function finalizarVenda(carrinho) {
       .single();
 
     if (fetchError || !produtoAtual) {
-      console.error(`Erro ao buscar estoque atual de ${item.nome}:`, fetchError);
+      const erro = `Erro ao buscar estoque atual de ${item.nome}: ${fetchError?.message || "Produto não encontrado"}`;
+      console.error(erro);
+      errosEstoque.push(erro);
       continue;
     }
 
+    console.log(`Produto ${item.nome} - Estoque no banco: ${produtoAtual.estoque}`);
+
     // Calcular novo estoque baseado no valor atual do banco
-    const novoEstoque = produtoAtual.estoque - item.quantidade;
+    const novoEstoque = Math.max(0, produtoAtual.estoque - item.quantidade);
 
-    console.log(`Atualizando estoque de ${item.nome}: ${produtoAtual.estoque} -> ${novoEstoque}`);
+    console.log(`🔄 Atualizando estoque de ${item.nome}: ${produtoAtual.estoque} → ${novoEstoque}`);
 
-    const { error: updateError } = await supabase
+    const { data: updateData, error: updateError } = await supabase
       .from("produtos")
       .update({ estoque: novoEstoque })
-      .eq("produto_id", item.produto_id);
+      .eq("produto_id", item.produto_id)
+      .select("produto_id, estoque");
 
     if (updateError) {
-      console.error(`Erro ao atualizar estoque de ${item.nome}:`, updateError);
+      const erro = `Erro ao atualizar estoque de ${item.nome}: ${updateError.message}`;
+      console.error(erro);
+      errosEstoque.push(erro);
+    } else {
+      console.log(`✅ Estoque atualizado! Nova resposta:`, updateData);
     }
   }
 
-  console.log("Venda finalizada com sucesso!");
+  if (errosEstoque.length > 0) {
+    console.warn("⚠️ Alguns estoques não foram atualizados:", errosEstoque);
+  }
+
+  console.log("✅ Venda finalizada com sucesso!");
   return venda;
 }

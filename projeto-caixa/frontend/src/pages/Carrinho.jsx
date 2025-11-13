@@ -57,14 +57,17 @@ export default function Carrinho() {
     setLoading(true);
     try {
       const venda = await finalizarVenda(carrinho);
+      console.log("Venda finalizada:", venda);
+      
       alert(`✅ Venda #${venda.venda_id} finalizada com sucesso!\nTotal: R$ ${venda.total.toFixed(2)}`);
       localStorage.removeItem("carrinho");
       setCarrinho([]);
       
-      // Aguarda 1 segundo e depois navega para produtos
+      // Aguarda 2 segundos para garantir que o estoque foi atualizado no banco
       setTimeout(() => {
-        navigate("/produtos");
-      }, 1000);
+        // Força atualização da página para recarregar estoque
+        navigate("/produtos", { state: { refreshProducts: true } });
+      }, 2000);
     } catch (error) {
       console.error("Erro ao finalizar venda:", error);
       alert(`❌ Erro ao finalizar venda:\n${error.message}`);
